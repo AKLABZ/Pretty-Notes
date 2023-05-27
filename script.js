@@ -3,10 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mousemove', handleMouseMove);
   
     function handleMouseMove(event) {
-      const pointerSize = redPointer.offsetWidth; // Get the size of the red pointer element
-      const pointerHalfSize = pointerSize / 2; // Calculate half the size of the red pointer
+      const pointerSize = redPointer.offsetWidth;
+      const pointerHalfSize = pointerSize / 2;
   
-      // Calculate the position of the red pointer to center it on the mouse pointer
       const pointerX = event.pageX - pointerHalfSize;
       const pointerY = event.pageY - pointerHalfSize;
   
@@ -37,9 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
     function saveScreenshot() {
       const body = document.body;
-      const excludedElementsList = ['userInput', 'clearButton', 'saveButton'];
+      const excludedElementsList = ['userInput', 'clearButton', 'saveButton', 'changeGradientButton'];
   
-      // Hide the excluded elements
       excludedElementsList.forEach((elementId) => {
         const element = document.getElementById(elementId);
         if (element) {
@@ -47,9 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
   
-      // Capture the screenshot using html2canvas
       html2canvas(body).then((canvas) => {
-        // Restore the visibility of the excluded elements
         excludedElementsList.forEach((elementId) => {
           const element = document.getElementById(elementId);
           if (element) {
@@ -57,33 +53,56 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
   
-        // Convert the canvas to a data URL with compression
-        const dataURL = canvas.toDataURL('image/jpeg', 0.8); // Adjust the quality value (0.0 - 1.0) as desired
+        const dataURL = canvas.toDataURL('image/jpeg', 0.8);
   
-        // Create a temporary link element and trigger a download of the screenshot
         const link = document.createElement('a');
         link.href = dataURL;
-        link.download = 'screenshot.jpg'; // Use .jpg extension for JPEG format
+        link.download = 'screenshot.jpg';
         link.click();
       });
     }
   
     const changeGradientButton = document.getElementById('changeGradientButton');
     changeGradientButton.addEventListener('click', changeGradients);
-    
-        function changeGradients() {
-          const gradients = [
-            'radial-gradient(circle, red, yellow, blue, white)',
-            'radial-gradient(circle, green, purple, orange, white)',
-            'radial-gradient(circle, pink, cyan, magenta, white)'
-          ];
-      
-          const elementsWithGradient = document.querySelectorAll('.gradient-element');
-      
-          Array.from(elementsWithGradient).forEach((element) => {
-            const randomIndex = Math.floor(Math.random() * gradients.length);
-            element.style.background = gradients[randomIndex];
-          });
+  
+    function changeGradients() {
+      const colors = [
+        'red',
+        'yellow',
+        'blue',
+        'green',
+        'purple',
+        'orange',
+        'pink',
+        'cyan',
+        'magenta'
+      ];
+  
+      const backgroundGradients = [
+        'radial-gradient(circle, ' + getRandomColor(colors) + ', ' + getRandomColor(colors) + ', ' + getRandomColor(colors) + ', white)',
+        'radial-gradient(circle, ' + getRandomColor(colors) + ', ' + getRandomColor(colors) + ', ' + getRandomColor(colors) + ', white)'
+      ];
+  
+      const elementGradients = [
+        'radial-gradient(circle, ' + getRandomColor(colors) + ', ' + getRandomColor(colors) + ')',
+        'radial-gradient(circle, ' + getRandomColor(colors) + ', ' + getRandomColor(colors) + ')',
+        'radial-gradient(circle, ' + getRandomColor(colors) + ', ' + getRandomColor(colors) + ')'
+      ];
+  
+      const elementsWithGradient = document.querySelectorAll('.gradient-element');
+  
+      Array.from(elementsWithGradient).forEach((element, index) => {
+        if (element === document.body) {
+          element.style.background = backgroundGradients[index % backgroundGradients.length];
+        } else {
+          element.style.background = elementGradients[index % elementGradients.length];
         }
       });
-      
+    }
+  
+    function getRandomColor(colors) {
+      const randomIndex = Math.floor(Math.random() * colors.length);
+      return colors[randomIndex];
+    }
+  });
+  
