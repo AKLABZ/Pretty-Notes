@@ -27,16 +27,23 @@ body {
     border: none;
   }
   
-  #clearButton {
+  #clearButton,
+  #saveButton,
+  #changeGradientButton {
     width: 75%;
     margin-top: 10px;
     font-family: sans-serif;
     font-weight: 900;
     font-size: medium;
-    background-color: black;
     color: white;
     border: none;
     padding: 10px;
+  }
+  
+  #clearButton,
+  .saveButton-gradient,
+  #changeGradientButton {
+    background-color: black;
   }
   
   #output-section {
@@ -57,19 +64,6 @@ body {
     padding: 20px;
   }
   
-  #saveButton {
-    width: 75%;
-    margin-top: 10px;
-    font-family: sans-serif;
-    font-weight: 900;
-    font-size: medium;
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 10px;
-  }
-
-  
   .body-gradient {
     background: radial-gradient(circle, pink, orange, green, white);
   }
@@ -86,7 +80,8 @@ body {
     background: radial-gradient(circle, green, pink);
   }
   
-  .saveButton-gradient {
+  .saveButton-gradient,
+  .changeGradientButton-gradient {
     background: radial-gradient(circle, orange, green);
   }
   
